@@ -13,7 +13,6 @@ stages:
         repository: 'bl0g.clusterhealth.webapi'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
-        buildContext: '../'
     # - task: PublishBuildArtifacts@1
     #   inputs:
     #     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
