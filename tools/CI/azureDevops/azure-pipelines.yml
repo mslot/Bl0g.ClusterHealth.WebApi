@@ -1,0 +1,25 @@
+stages:
+- stage: Build
+  variables:
+  - group: Bl0g.Infrastructure.Build
+  jobs:
+  - job: BuildJob
+    pool:
+        vmImage: 'windows-latest'
+    steps:
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+        
+- stage: DeployProduction
+  variables:
+    - group: Bl0g
+    - group: Bl0g.Production
+    - name: "TEMPLATE_STORAGE_NAME"
+      value: "$(Blog.Prefix)$(Release.Template.Storage.Name)$(Env)"
+    - name: "RESOURCE_GROUP_NAME"
+      value: "$(Blog.Prefix)-$(ResourceGroup.Name)-rg"
+  jobs:
+
