@@ -10,9 +10,10 @@ stages:
     - task: Docker@2
       inputs:
         containerRegistry: 'docker-registry-prd-connection'
-        repository: 'webapis'
+        repository: 'bl0g.clusterhealth.webapi'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
+        buildContext: '../'
     # - task: PublishBuildArtifacts@1
     #   inputs:
     #     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
