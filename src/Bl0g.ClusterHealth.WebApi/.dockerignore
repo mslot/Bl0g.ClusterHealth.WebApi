@@ -7,3 +7,6 @@
 */bin
 */obj
 **/.toolstarget
+!*.dll
+!obj/Docker/publish/*
+!obj/Docker/empty/
