@@ -5,7 +5,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
 WORKDIR /src
-COPY ["Bl0g.ClusterHealth.WebApi/Bl0g.ClusterHealth.WebApi.csproj", "Bl0g.ClusterHealth.WebApi/"]
+COPY ["Bl0g.ClusterHealth.WebApi.csproj", "Bl0g.ClusterHealth.WebApi/"]
 RUN dotnet restore "Bl0g.ClusterHealth.WebApi/Bl0g.ClusterHealth.WebApi.csproj"
 COPY . .
 WORKDIR "/src/Bl0g.ClusterHealth.WebApi"
