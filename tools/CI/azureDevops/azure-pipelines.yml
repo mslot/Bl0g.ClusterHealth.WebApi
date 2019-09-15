@@ -7,19 +7,25 @@ stages:
     pool:
         vmImage: 'windows-latest'
     steps:
-    - task: PublishBuildArtifacts@1
+    - task: Docker@2
       inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'drop'
-        publishLocation: 'Container'
+        containerRegistry: 'docker-registry-prd-connection'
+        repository: 'webapis'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+    # - task: PublishBuildArtifacts@1
+    #   inputs:
+    #     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    #     ArtifactName: 'drop'
+    #     publishLocation: 'Container'
         
-- stage: DeployProduction
-  variables:
-    - group: Bl0g
-    - group: Bl0g.Production
-    - name: "TEMPLATE_STORAGE_NAME"
-      value: "$(Blog.Prefix)$(Release.Template.Storage.Name)$(Env)"
-    - name: "RESOURCE_GROUP_NAME"
-      value: "$(Blog.Prefix)-$(ResourceGroup.Name)-rg"
-  jobs:
+# - stage: DeployProduction
+#   variables:
+#     - group: Bl0g
+#     - group: Bl0g.Production
+#     - name: "TEMPLATE_STORAGE_NAME"
+#       value: "$(Blog.Prefix)$(Release.Template.Storage.Name)$(Env)"
+#     - name: "RESOURCE_GROUP_NAME"
+#       value: "$(Blog.Prefix)-$(ResourceGroup.Name)-rg"
+#   jobs:
 
