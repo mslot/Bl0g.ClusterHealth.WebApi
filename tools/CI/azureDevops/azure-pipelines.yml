@@ -14,6 +14,9 @@ stages:
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
         buildContext: '/Bl0g.ClusterHealth.WebApi/src/Bl0g.ClusterHealth.WebApi'
+        tags: |
+          $(Build.BuildId)
+          dev
     # - task: PublishBuildArtifacts@1
     #   inputs:
     #     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
