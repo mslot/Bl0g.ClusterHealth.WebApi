@@ -13,7 +13,7 @@ stages:
         repository: 'bl0g.clusterhealth.webapi'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
-        buildContext: '/Bl0g.ClusterHealth.WebApi/src/Bl0g.ClusterHealth.WebApi'
+        buildContext: '$(System.ArtifactsDirectory)/Bl0g.ClusterHealth.WebApi/src/Bl0g.ClusterHealth.WebApi'
         tags: |
           $(Build.BuildId)
           dev
