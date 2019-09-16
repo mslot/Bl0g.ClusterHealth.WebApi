@@ -15,8 +15,7 @@ stages:
         Dockerfile: '**/Dockerfile'
         buildContext: '$(Build.Repository.LocalPath)/src/Bl0g.ClusterHealth.WebApi'
         tags: |
-          $(Build.BuildId)
-          dev
+          dev-$(Build.BuildId)
     # - task: PublishBuildArtifacts@1
     #   inputs:
     #     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
