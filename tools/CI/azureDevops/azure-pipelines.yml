@@ -21,7 +21,7 @@ stages:
     - task: PublishPipelineArtifact@1
       inputs:
         artifactName: 'bl0g.clusterhealth.webapi.manifests'
-        path: '$(Build.Repository.LocalPath)/src/tools/deploy/kubernetes'
+        path: '$(Build.Repository.LocalPath)/tools/deploy/kubernetes'
 
 - stage: Deploy
   displayName: Deploy stage
