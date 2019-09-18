@@ -44,9 +44,11 @@ stages:
           - task: KubernetesManifest@0
             displayName: Create imagePullSecret
             inputs:
-              action: createSecret
-              secretName: 'AzureDevOpsSecret'
+              action: 'createSecret'
+              kubernetesServiceConnection: 'blog-aks-test-connection'
               namespace: 'test'
+              secretType: 'dockerRegistry'
+              secretName: 'AzureDevOpsSecret'
               dockerRegistryEndpoint: 'docker-registry-prd-connection'
               
           - task: KubernetesManifest@0
