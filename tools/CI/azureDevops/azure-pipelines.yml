@@ -7,6 +7,7 @@ stages:
     pool:
         vmImage: 'ubuntu-latest'
     steps:
+
     - task: Docker@2
       inputs:
         containerRegistry: 'docker-registry-prd-connection'
@@ -16,9 +17,10 @@ stages:
         buildContext: '$(Build.Repository.LocalPath)/src/Bl0g.ClusterHealth.WebApi'
         tags: |
           $(Build.BuildId)
+
     - task: PublishPipelineArtifact@1
       inputs:
-        artifactName: 'manifests'
+        artifactName: 'bl0g.clusterhealth.webapi.manifests'
         path: 'tools/deploy/kubernetes'
 
 - stage: Deploy
@@ -28,7 +30,7 @@ stages:
   - deployment: Deploy
     displayName: Deploy job
     pool:
-      vmImage: $(vmImageName)
+      vmImage: 'ubuntu-latest'
     environment: 'blog-deployment'
     strategy:
       runOnce:
@@ -36,28 +38,28 @@ stages:
           steps:
           - task: DownloadPipelineArtifact@2
             inputs:
-              artifactName: 'manifests'
+              artifactName: 'bl0g.clusterhealth.webapi.manifests'
               downloadPath: '$(System.ArtifactsDirectory)/manifests'
 
           - task: KubernetesManifest@0
             displayName: Create imagePullSecret
             inputs:
               action: createSecret
-              secretName: $(imagePullSecret)
-              namespace: $(k8sNamespace)
-              dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
+              secretName: 'AzureDevOpsSecret'
+              namespace: 'test'
+              dockerRegistryEndpoint: 'docker-registry-prd-connection'
               
           - task: KubernetesManifest@0
             displayName: Deploy to Kubernetes cluster
             inputs:
               action: deploy
-              namespace: $(k8sNamespace)
+              namespace: 'test'
               manifests: |
                 $(System.ArtifactsDirectory)/manifests/deployment.yml
                 $(System.ArtifactsDirectory)/manifests/service.yml
               imagePullSecrets: |
-                $(imagePullSecret)
+                'AzureDevOpsSecret'
               containers: |
-                $(containerRegistry)/$(imageRepository):$(tag)
+                sigsysblogregistryprd/bl0g.clusterhealth.webapi:$(Build.BuildId)
     
 
