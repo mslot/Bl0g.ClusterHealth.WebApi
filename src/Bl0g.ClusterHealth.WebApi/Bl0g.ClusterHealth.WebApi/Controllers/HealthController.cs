@@ -15,7 +15,7 @@ namespace Bl0g.ClusterHealth.WebApi.Controllers
         [Route("Ping")]
         public async Task<ActionResult> Ping()
         {
-            return await Task.FromResult(Ok());
+            return await Task.FromResult(Ok("AKS online"));
         }
     }
 }
