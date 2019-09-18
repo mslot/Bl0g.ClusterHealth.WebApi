@@ -60,5 +60,5 @@ stages:
               manifests: |
                 $(System.ArtifactsDirectory)/manifests/Deployment.yml
                 $(System.ArtifactsDirectory)/manifests/Service.yml
-              containers: 'sigsysblogregistryprd/bl0g.clusterhealth.webapi:$(Build.BuildId)'
-              imagePullSecrets: '''AzureDevOpsSecret'''
+              containers: 'sigsysblogregistryprd.azurecr.io/bl0g.clusterhealth.webapi:$(Build.BuildId)'
+              imagePullSecrets: 'health.sigsys.dk'
