@@ -54,14 +54,11 @@ stages:
           - task: KubernetesManifest@0
             displayName: Deploy to Kubernetes cluster
             inputs:
-              action: deploy
+              action: 'deploy'
+              kubernetesServiceConnection: 'blog-aks-test-connection'
               namespace: 'test'
               manifests: |
                 $(System.ArtifactsDirectory)/manifests/deployment.yml
                 $(System.ArtifactsDirectory)/manifests/service.yml
-              imagePullSecrets: |
-                'AzureDevOpsSecret'
-              containers: |
-                sigsysblogregistryprd/bl0g.clusterhealth.webapi:$(Build.BuildId)
-    
-
+              containers: 'sigsysblogregistryprd/bl0g.clusterhealth.webapi:$(Build.BuildId)'
+              imagePullSecrets: '''AzureDevOpsSecret'''
