@@ -41,7 +41,7 @@ namespace Bl0g.ClusterHealth.WebApi
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseMvc();
         }
     }
