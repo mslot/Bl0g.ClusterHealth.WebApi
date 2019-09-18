@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: health-api
-        image: bl0g.clusterhealth.webapi 
+        image: sigsysblogregistryprd.azurecr.io/bl0g.clusterhealth.webapi
         ports:
         - containerPort: 80
         - containerPort: 443
