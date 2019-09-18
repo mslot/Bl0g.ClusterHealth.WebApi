@@ -48,6 +48,7 @@ stages:
               kubernetesServiceConnection: 'blog-aks-test-connection'
               namespace: 'test'
               secretType: 'dockerRegistry'
+              secretName: 'health.sigsys.dk'
               dockerRegistryEndpoint: 'docker-registry-prd-connection'
               
           - task: KubernetesManifest@0
