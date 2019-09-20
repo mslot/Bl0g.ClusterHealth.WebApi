@@ -23,8 +23,8 @@ stages:
         artifactName: 'bl0g.clusterhealth.webapi.manifests'
         path: '$(Build.Repository.LocalPath)/tools/Deploy/Kubernetes'
 
-- stage: Deploy
-  displayName: Deploy stage
+- stage: DeployDevelopment
+  displayName: Deploy development
   dependsOn: Build
   jobs:
   - deployment: Deploy
@@ -45,20 +45,20 @@ stages:
             displayName: Create imagePullSecret
             inputs:
               action: 'createSecret'
-              kubernetesServiceConnection: 'blog-aks-test-connection'
-              namespace: 'test'
+              kubernetesServiceConnection: 'blog-aks-connection'
+              namespace: 'development'
               secretType: 'dockerRegistry'
-              secretName: 'health.sigsys.dk'
+              secretName: 'blog.sigsys.dk'
               dockerRegistryEndpoint: 'docker-registry-prd-connection'
               
           - task: KubernetesManifest@0
             displayName: Deploy to Kubernetes cluster
             inputs:
               action: 'deploy'
-              kubernetesServiceConnection: 'blog-aks-test-connection'
-              namespace: 'test'
+              kubernetesServiceConnection: 'blog-aks-connection'
+              namespace: 'development'
               manifests: |
                 $(System.ArtifactsDirectory)/manifests/Deployment.yml
                 $(System.ArtifactsDirectory)/manifests/Service.yml
               containers: 'sigsysblogregistryprd.azurecr.io/bl0g.clusterhealth.webapi:$(Build.BuildId)'
-              imagePullSecrets: 'health.sigsys.dk'
+              imagePullSecrets: 'blog.sigsys.dk'
