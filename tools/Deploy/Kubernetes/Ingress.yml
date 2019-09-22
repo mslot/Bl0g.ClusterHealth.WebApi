@@ -2,8 +2,8 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: health-ingress
-labels:
-  app: health-ingress
+  labels:
+    app: health-ingress
 spec:
   backend:
     serviceName: health-api-service
