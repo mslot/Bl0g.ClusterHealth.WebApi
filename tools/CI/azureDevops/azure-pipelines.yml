@@ -62,6 +62,7 @@ stages:
                 $(System.ArtifactsDirectory)/manifests/Service.yml
               containers: 'sigsysblogregistryprd.azurecr.io/bl0g.clusterhealth.webapi:$(Build.BuildId)'
               imagePullSecrets: 'blog.sigsys.dk'
+
 - stage: DeployStaging
   displayName: Deploy staging
   dependsOn:
@@ -101,5 +102,6 @@ stages:
               manifests: |
                 $(System.ArtifactsDirectory)/manifests/Deployment.yml
                 $(System.ArtifactsDirectory)/manifests/Service.yml
+                $(System.ArtifactsDirectory)/manifests/Ingress.yml
               containers: 'sigsysblogregistryprd.azurecr.io/bl0g.clusterhealth.webapi:$(Build.BuildId)'
               imagePullSecrets: 'blog.sigsys.dk'

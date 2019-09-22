@@ -19,4 +19,3 @@ spec:
         image: sigsysblogregistryprd.azurecr.io/bl0g.clusterhealth.webapi
         ports:
         - containerPort: 80
-        - containerPort: 443
