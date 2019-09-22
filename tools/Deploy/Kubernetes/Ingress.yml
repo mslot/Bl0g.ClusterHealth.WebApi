@@ -5,6 +5,10 @@ metadata:
   labels:
     app: health-ingress
 spec:
-  backend:
-    serviceName: health-api-service
-    servicePort: 80
+  rules:
+    - host: dev.sigsys.dk
+      http:
+        paths:
+        - backend:
+            serviceName: health-api-service
+            servicePort: 80
