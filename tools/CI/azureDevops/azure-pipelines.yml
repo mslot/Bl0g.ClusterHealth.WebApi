@@ -91,6 +91,7 @@ stages:
             inputs:
               artifactName: 'bl0g.clusterhealth.webapi.manifests'
               downloadPath: '$(System.ArtifactsDirectory)/manifests'
+              
           - task: Kubernetes@1
             displayName: kubectl apply using arguments
             inputs:
