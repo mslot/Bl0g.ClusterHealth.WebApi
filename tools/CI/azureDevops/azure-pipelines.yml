@@ -42,16 +42,6 @@ stages:
             inputs:
               artifactName: 'bl0g.clusterhealth.webapi.manifests'
               downloadPath: '$(System.ArtifactsDirectory)/manifests'
-              
-          - task: Kubernetes@1
-            displayName: Create development namespace
-            inputs:
-              connectionType: 'Kubernetes Service Connection'
-              kubernetesServiceEndpoint: 'blog-aks-connection'
-              command: 'create'
-              arguments: 'namespace development'
-              secretType: 'dockerRegistry'
-              containerRegistryType: 'Azure Container Registry'
 
           - task: KubernetesManifest@0
             displayName: Create imagePullSecret
@@ -108,16 +98,6 @@ stages:
             inputs:
               artifactName: 'bl0g.clusterhealth.webapi.manifests'
               downloadPath: '$(System.ArtifactsDirectory)/manifests'
-              
-          - task: Kubernetes@1
-            displayName: Create staging namespace
-            inputs:
-              connectionType: 'Kubernetes Service Connection'
-              kubernetesServiceEndpoint: 'blog-aks-connection'
-              command: 'create'
-              arguments: 'namespace staging'
-              secretType: 'dockerRegistry'
-              containerRegistryType: 'Azure Container Registry'
 
           - task: KubernetesManifest@0
             displayName: Create imagePullSecret
@@ -128,7 +108,17 @@ stages:
               secretType: 'dockerRegistry'
               secretName: 'blog'
               dockerRegistryEndpoint: 'docker-registry-prd-connection'
-              
+          - task: "A8515EC8-7254-4FFD-912C-86772E2B5962@3"
+            inputs:
+              rootDirectory: '$(System.ArtifactsDirectory)/manifests/'
+              targetFiles: '**/*.yml'
+              encoding: 'auto'
+              writeBOM: true
+              verbosity: 'detailed'
+              actionOnMissing: 'warn'
+              keepToken: false
+              tokenPrefix: '{{'
+              tokenSuffix: '}}'
           - task: KubernetesManifest@0
             displayName: Deploy to Kubernetes cluster
             inputs:
@@ -136,7 +126,7 @@ stages:
               kubernetesServiceConnection: 'blog-aks-connection'
               namespace: 'staging'
               manifests: |
-                $(System.ArtifactsDirectory)/manifests/Namespace.Template.json
+                $(System.ArtifactsDirectory)/manifests/Namespace.yml
                 $(System.ArtifactsDirectory)/manifests/Deployment.yml
                 $(System.ArtifactsDirectory)/manifests/Service.yml
                 $(System.ArtifactsDirectory)/manifests/Ingress.yml
