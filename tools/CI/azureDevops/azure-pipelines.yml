@@ -62,7 +62,7 @@ stages:
               secretType: 'dockerRegistry'
               secretName: 'blog'
               dockerRegistryEndpoint: 'docker-registry-prd-connection'
-          - task: replacetokens@3
+          - task: "A8515EC8-7254-4FFD-912C-86772E2B5962@3"
             inputs:
               rootDirectory: '$(System.ArtifactsDirectory)/manifests/'
               targetFiles: '**/*.yml'
