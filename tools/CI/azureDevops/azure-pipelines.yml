@@ -68,6 +68,7 @@ stages:
               targetFiles: '**/*.yml'
               encoding: 'auto'
               writeBOM: true
+              verbosity: 'detailed'
               actionOnMissing: 'warn'
               keepToken: false
               tokenPrefix: '{{'
