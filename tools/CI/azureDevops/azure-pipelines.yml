@@ -36,18 +36,20 @@ stages:
       runOnce:
         deploy:
           steps:
-          - task: Kubernetes@1
-            displayName: kubectl apply using arguments
-            inputs:
-              connectionType: Azure Resource Manager
-              kubernetesServiceConnection: 'blog-aks-connection'
-              command: create
-              arguments: namespace development  
-
           - task: DownloadPipelineArtifact@2
             inputs:
               artifactName: 'bl0g.clusterhealth.webapi.manifests'
               downloadPath: '$(System.ArtifactsDirectory)/manifests'
+              
+          - task: Kubernetes@1
+            displayName: Create development namespace
+            inputs:
+              connectionType: 'Kubernetes Service Connection'
+              kubernetesServiceEndpoint: 'blog-aks-connection'
+              command: 'create'
+              arguments: 'namespace development'
+              secretType: 'dockerRegistry'
+              containerRegistryType: 'Azure Container Registry'
 
           - task: KubernetesManifest@0
             displayName: Create imagePullSecret
@@ -93,12 +95,14 @@ stages:
               downloadPath: '$(System.ArtifactsDirectory)/manifests'
               
           - task: Kubernetes@1
-            displayName: kubectl apply using arguments
+            displayName: Create staging namespace
             inputs:
-              connectionType: Azure Resource Manager
-              kubernetesServiceConnection: 'blog-aks-connection'
-              command: create
-              arguments: namespace staging  
+              connectionType: 'Kubernetes Service Connection'
+              kubernetesServiceEndpoint: 'blog-aks-connection'
+              command: 'create'
+              arguments: 'namespace staging'
+              secretType: 'dockerRegistry'
+              containerRegistryType: 'Azure Container Registry'
 
           - task: KubernetesManifest@0
             displayName: Create imagePullSecret
